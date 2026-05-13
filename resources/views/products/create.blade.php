@@ -1,67 +1,58 @@
 <x-app-layout>
-    <form enctype="multipart/form-data" class="w-full bg-white dark:bg-gray-800 p-6 rounded-lg
-shadow" action="{{ url('products/new') }}" method="POST">
-        @csrf
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Cadastrar Novo Produto') }}
+        </h2>
+    </x-slot>
 
-        @if(session('error'))
-        <div class="bg-red-100 text-red-800 p-3 rounded mb-4">
-            {{ session('error') }}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="mt-4">
+                        <x-input-label for="name" :value="__('Nome do Produto')" />
+                        <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
+                    </div>
+
+                    <div class="mt-4">
+                        <x-input-label for="type_id" :value="__('Categoria')" />
+                        <select name="type_id" id="type_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                            @foreach($types as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <x-input-label for="price" :value="__('Preço')" />
+                            <x-text-input id="price" class="block mt-1 w-full" type="number" step="0.01" name="price" required />
+                        </div>
+                        <div>
+                            <x-input-label for="quantity" :value="__('Quantidade')" />
+                            <x-text-input id="quantity" class="block mt-1 w-full" type="number" name="quantity" required />
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <x-input-label for="description" :value="__('Descrição')" />
+                        <textarea name="description" id="description" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="3"></textarea>
+                    </div>
+
+                    <div class="mt-4">
+                        <x-input-label for="image" :value="__('Imagem do Produto')" />
+                        <input id="image" type="file" name="image" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                    </div>
+
+                    <div class="flex items-center justify-end mt-6">
+                        <x-primary-button>
+                            {{ __('Cadastrar Produto') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
         </div>
-        @endif
-
-        <h1 class="text-2xl font-bold mb-6 text-gray-900
-dark:text-white">Cadastrar Produto</h1>
-
-        <x-meu-input name="name" label="Nome:" />
-
-        @error('name')
-        <p class="text-red-600 mb-4 text-sm">{{ $message }}</p>
-        @enderror
-
-        <x-meu-input name="quantity" label="Quantidade:" type="number" />
-
-        @error('quantity')
-        <p class="text-red-600 mb-4 text-sm">{{ $message }}</p>
-        @enderror
-
-        <x-meu-input name="description" label="Descrição:" type="text" />
-
-        <x-meu-input name="price" label="Preço:" type="number" />
-
-        @error('price')
-        <p class="text-red-600 mb-4 text-sm">{{ $message }}</p>
-        @enderror
-
-        <div x-data="{ imageURL: null}">
-            <label class="block mb-1 text-gray-700 dark:text-gray-300">Imagem:</label>
-            <input 
-            x-on:change="imageURL = URL.createObjectURL($event.target.files[0])"
-            name="image" type="file" accept="image/*" class="w-full p-2 mb-4
-rounded border dark:bg-gray-700 dark:text-white" />
-
-        <img x-show="imageURL" x-bind:src="imageURL" class="mt-4 h-48" />
-        </div>
-
-        @error('image')
-        <p class="text-red-600 font-bold text-sm mb-4">{{ $message }}</p>
-        @enderror
-
-
-
-        <select class="w-full p-2 mb-4 rounded border dark:bg-gray-700 dark:text-white" name="type_id">
-            <option value="">Selecione</option>
-
-            @foreach($types as $type)
-            <option value="{{ $type->id }}">
-                {{ $type->name }}
-            </option>
-            @endforeach
-        </select>
-
-        <x-primary-button>
-            Salvar
-        </x-primary-button>
-
-
-    </form>
+    </div>
 </x-app-layout>

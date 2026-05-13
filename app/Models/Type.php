@@ -9,9 +9,14 @@ class Type extends Model
 {
     use HasFactory;
 
+    // Campos que podem ser preenchidos via formulário
     protected $fillable = ['name'];
-    
-    public function products() {
+
+    /**
+     * Relacionamento: Um Tipo possui muitos Produtos
+     */
+    public function products()
+    {
         return $this->hasMany(Product::class);
     }
 }
