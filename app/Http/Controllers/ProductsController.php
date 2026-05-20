@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
+    public function apiIndex() {
+        return Product::with('type')->get();
+    }
+
+
     public function vitrine(Request $request)
     {
         $types = Type::all();

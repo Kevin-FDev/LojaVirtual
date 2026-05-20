@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/products/report', [ProductsController::class, 'report'])->name('products.report');
     Route::get('/products/report/pdf', [ProductsController::class, 'reportPdf'])->name('products.report.pdf');
+
+    Route::get('/api/products', [ProductsController::class, 'apiIndex'])->name('api.products');
 });
 
 require __DIR__ . '/auth.php';
