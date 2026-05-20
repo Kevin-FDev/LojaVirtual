@@ -57,4 +57,11 @@ produto" class="w-20 h-20 object-cover rounded">
             </tbody>
         </table>
     </div>
+
+    <div class="flex gap-2">
+        <a href="{{ route('products.report') }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700">
+            Relatorio
+        </a>
+        <a href="{{ url('products/new') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Cadastrar</a>
+    </div>
 </x-app-layout>

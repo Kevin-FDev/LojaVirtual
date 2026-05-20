@@ -14,13 +14,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-   
+
     Route::get('/products', [ProductsController::class, 'index'])->name('products'); // Listagem adm
     Route::get('/products/new', [ProductsController::class, 'create'])->name('products.create'); // Tela de cadastro
     Route::post('/products/new', [ProductsController::class, 'store'])->name('products.store'); // Ação de salvar
@@ -31,6 +31,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/types/new', [TypesController::class, 'create'])->name('types.create'); // Tela de cadastro de tipo
     Route::post('/types/new', [TypesController::class, 'store'])->name('types.store'); // Ação de salvar tipo
+
+    Route::get('/products/report', [ProductsController::class, 'report'])->name('products.report');
+    Route::get('/products/report/pdf', [ProductsController::class, 'reportPdf'])->name('products.report.pdf');
+
+    Route::get('/products/report', [ProductsController::class, 'report'])->name('products.report');
+    Route::get('/products/report/pdf', [ProductsController::class, 'reportPdf'])->name('products.report.pdf');
 });
 
 require __DIR__ . '/auth.php';
